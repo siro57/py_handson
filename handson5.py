@@ -1,18 +1,18 @@
 a = int(input("数字を入力してください:"))
+b = int(input("数字を入力してください:"))
 
-for i in range(2, limit+1):
-    for j in range a // i == 0 :
-        print(False)
-    else:
-        print(True)     
-
-x = 0
-limit = 20000
-
-for i in range(2, limit + 1):
-    for j in range(2, (i // 2) + 1):
-        if i % j == 0:
-            break
-    else:
-        x += i
-print(x)
+if 1 < a and 1 < b:
+    for i in range(2, a+1):
+        for j in range(2, (i//2)+1):
+            if i % j == 0:
+                print("false")
+            else:
+                print("aは素数")    
+                for i in range(2,b+1):
+                    for j in range (2, (i//2)+1):
+                        if i % j == 0:
+                            print("false")
+                        else:
+                            print("True")     
+else:
+    print("素数ではない")
