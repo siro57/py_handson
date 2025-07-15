@@ -45,40 +45,39 @@ print(f"{data} => {sorted_data}")
 
 #3マージソートを作成せよ。
 def merge_sort(data):
-    if len(data) <= 1:#データが1以下の場合を除外
+    if len(data) <= 1:#データが1以下の場合を除外(最後の処理。分割できなくなったらデータを返す)
         return data
     # データを分割
-    center_idx = len(data) // 2#２であまりの内容に割る
-    left_data = data[:center_idx]
-    right_data = data[center_idx:]
-    # 分割したリストを渡して再帰的に関数を実行
-    merge_sort(left_data)
+    center_idx = len(data) // 2#２で余りがないように割る（奇数でも必ず分割できる）
+    left_data = data[:center_idx]#要素0〜分割点直前
+    right_data = data[center_idx:]#分割点直後から最後までの要素
+    merge_sort(left_data)#分割できなくなるまで左リスト、右リストに分ける
     merge_sort(right_data)
 
-    left_idx = right_idx = idx = 0#リストの要素が最小化されている
-    # 分割したリストの左側リスト、右側リストの全要素を比較＆並べ替え
-    while left_idx < len(left_data) and right_idx < len(right_data):
-        if left_data[left_idx] <= right_data[right_idx]:
-            data[idx] = left_data[left_idx]
-            left_idx += 1
+    left_idx = right_idx = idx = 0#リストの要素が最小化されている(スタート地点は全てのリストにおいて0で、要素も0。)
+    while left_idx < len(left_data) and right_idx < len(right_data): 
+    #左リストのポインタ（今チェックしている要素）が、左リストの要素数より小さく、右リストのポインタが、右リストの要素より小さいかぎり処理が続く。
+        if left_data[left_idx] <= right_data[right_idx]:#もし左リストの要素が右リストの要素より小さければ
+            data[idx] = left_data[left_idx]#データリストに左リストの要素が加えられる
+            left_idx += 1 #左リストのポインタが次の要素に移る
         else:
-            data[idx] = right_data[right_idx]
-            right_idx += 1
-        idx += 1
+            data[idx] = right_data[right_idx] #右リストの要素が左リストの要素よりも小さい場合（上の逆）
+            right_idx += 1 #右リストのポインタが次の要素に移る
+        idx += 1 #データリストのポインタはどちらの処理が実行されても次の要素に移る
 
-    # 右側リストの要素が残っていればそれをすべて代入
+    # 右側リストの要素が残っていればそれをすべて代入（上のwhile文の処理後の処理）
     while right_idx < len(right_data):
         data[idx] = right_data[right_idx]
         idx += 1
         right_idx += 1
 
-    # 左側リストの要素が残っていればそれをすべて代入      
+    # 左側リストの要素が残っていればそれをすべて代入 (右側リストに要素が残っていなければ処理)     
     while left_idx < len(left_data):
         data[idx] = left_data[left_idx]
         idx += 1
         left_idx += 1
 
-    return data
+    return data #データを返す
 
 data = [6, 15, 4, 2, 8, 5, 11, 9, 7, 13]
 sorted_data = merge_sort(data.copy())
